@@ -1,0 +1,38 @@
+{
+  "name": "atanas-diplomska",
+  "version": "1.0.0",
+  "description": "A boilerplate for Node.js web applications",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheHalcyonSavant/atanas-diplomska.git"
+  },
+  "author": "Atanas Sajkarov",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "cp node_modules/font-awesome/web-fonts-with-css/webfonts/* public/webfonts && cp node_modules/bootstrap/dist/js/bootstrap.min.* public/js/lib && cp node_modules/jquery/dist/jquery.min.* public/js/lib && npm rebuild node-sass",
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@ladjs/bootstrap-social": "^7.0.2",
+    "body-parser": "^1.18.2",
+    "bootstrap": "^4.1.1",
+    "connect-mongo": "^2.0.1",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.15.6",
+    "font-awesome": "git+https://github.com/TheHalcyonSavant/Font-Awesome.git",
+    "jquery": "^3.3.1",
+    "mongoose": "^5.0.18",
+    "node-sass": "^4.8.3",
+    "node-sass-middleware": "^0.11.0",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.3"
+  },
+  "engines": {
+    "node": ">=8.11.1",
+    "npm": ">=5.6.0"
+  }
+}

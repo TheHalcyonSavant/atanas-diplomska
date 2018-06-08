@@ -1,0 +1,28 @@
+.navbar.navbar-expand-md.navbar-light.bg-light
+  .container
+    a.navbar-brand(href='#')
+      i.fas.fa-graduation-cap.mr-2
+      | Diplomska
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+      span.navbar-toggler-icon
+    .collapse.navbar-collapse
+      ul.nav.navbar-nav
+        li.nav-item(class=(title === 'Map') ? 'active' : undefined)
+          a.nav-link(href='/') Map
+        if user && user.username === 'Atanas'
+          li.nav-item(class=(title === 'Table') ? 'active' : undefined)
+            a.nav-link(href='/table') Table
+      ul.nav.navbar-nav.ml-auto
+        if !user
+          li.nav-item(class=(title === 'Login') ? 'active' : undefined)
+            a.nav-link(href='/login') Login
+          li.nav-item(class=(title === 'Create Account') ? 'active' : undefined)
+            a.nav-link(href='/signup') Create Account
+        else
+          li.dropdown.nav-item
+            a.dropdown-toggle.nav-link(href='#', data-toggle='dropdown')
+              span= user.username || user.id
+              i.caret
+            ul.dropdown-menu
+              li.dropdown-item
+                a(href='/logout') Logout

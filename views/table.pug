@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  h2
+    i.fas.fa-table.fa-sm.mr-2
+    | Table
+
+  table.table.table-sm(style="font-size:.8rem")
+    thead
+      tr
+        th(scope="col") Type
+        th(scope="col") Description
+        th(scope="col") Position
+        th(scope="col") 
+    tbody
+
+  script.
+    window.onload = function(){
+      $.get('/map', function(d) {
+        d.markers.forEach(function(data) {
+          $('tbody').append(`<tr><td>${data.type}</td><td>${data.description}</td><td>${data.lat}, ${data.lng}</td>` +
+          `<td><button class="btn btn-danger btn-sm float-right" onclick="removeMarker(this, '${data._id}')"><i class="fa fa-trash"></i></button></td></tr>`);
+        });
+      });
+    };
+
+    function removeMarker(btn, id) {
+      $.ajax({
+        url: '/map',
+        type: 'DELETE',
+        data: {
+          id: id
+        },
+        success: function() {
+          $(btn).closest('tr').remove();
+        }
+      });
+    }

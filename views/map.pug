@@ -1,0 +1,96 @@
+extends layout
+
+block content
+  h2
+    i.fab.fa-google.fa-sm.mr-2
+    | Emergency Map
+  style.
+    #map {
+      width: 100%;
+      height: 500px;
+    }
+  #map
+  .modal(tabindex='-1', role="dialog")
+    .modal-dialog.modal-sm(role="document")
+      .modal-content
+        .modal-header
+          h5.modal-title Modal title
+          button.close(data-dismiss="modal", aria-label="Close", onclick="dismissMarker()")
+            span(aria-hidden="true") &times;
+        .modal-body
+          form
+            .form-group
+              label(for="type") Type
+              select.form-control(id="type")
+                option one
+                option two
+                option three
+            .form-group
+              label(for="description") Description
+              input.form-control(id="description", placeholder="Description")
+        .modal-footer
+          button.btn.btn-primary(onclick="saveMarker()") Save changes
+
+  script.
+    var map, marker;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        // Kranj
+        center: {
+          lat: 45.5330071,
+          lng: 13.7353257
+        },
+        zoom: 14 // times clicking +
+      });
+      $.get('/map', function(d) {
+        d.markers.forEach(function(data) {
+          var m = new google.maps.Marker({
+            position: new google.maps.LatLng(data.lat, data.lng),
+            map: map
+          });
+          addMarkerToMap(m, data);
+        });
+      });
+      map.addListener('click', function(e) {
+        marker = new google.maps.Marker({
+          position: e.latLng,
+          map: map
+        });
+        $('#type').val('one');
+        $('#description').val('');
+        $('.modal').modal('show');
+      });
+    }
+
+    function addMarkerToMap(m, data) {
+      var infoWindow = new google.maps.InfoWindow({
+        content: `Owner: <i>${data.owner}</i><br/>Type: <b>${data.type}</b><br/>${data.description}`
+      });
+      
+      m.addListener('click', function () {
+        infoWindow.open(map, this);
+      });
+      google.maps.event.trigger(m, 'click');
+    }
+
+    function saveMarker() {
+      var pos = marker.getPosition();
+      var data = {
+        owner: '#{user.username}',
+        description: $('#description').val(),
+        type: $('#type').val(),
+        lat: pos.lat(),
+        lng: pos.lng()
+      };
+      $('.modal').modal('hide');
+      addMarkerToMap(marker, data);
+      $.post('/map', data);
+    }
+
+    function dismissMarker() {
+      marker.setMap(null);
+    }
+
+  script(async defer src='https://maps.googleapis.com/maps/api/js?callback=initMap')
+  //script(async defer src=`https://maps.googleapis.com/maps/api/js?key=${google_map_api_key}&callback=initMap`)
