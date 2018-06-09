@@ -7,6 +7,7 @@ html
     title #{title}
     link(rel='shortcut icon', href='/favicon.png')
     link(rel='stylesheet', href='/css/main.css')
+    block style
   body
     include partials/header
     .container
@@ -15,3 +16,4 @@ html
     script(src='/js/lib/jquery.min.js')
     script(src='/js/lib/bootstrap.min.js')
     script(src='/js/main.js')
+    block script

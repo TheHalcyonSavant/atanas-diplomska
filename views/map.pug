@@ -1,14 +1,16 @@
 extends layout
 
-block content
-  h2
-    i.fab.fa-google.fa-sm.mr-2
-    | Emergency Map
+block style
   style.
     #map {
       width: 100%;
       height: 500px;
     }
+
+block content
+  h2
+    i.fab.fa-google.fa-sm.mr-2
+    | Emergency Map
   #map
   .modal(tabindex='-1', role="dialog")
     .modal-dialog.modal-sm(role="document")
@@ -31,6 +33,7 @@ block content
         .modal-footer
           button.btn.btn-primary(onclick="saveMarker()") Save changes
 
+block script
   script.
     var map, marker;
 
