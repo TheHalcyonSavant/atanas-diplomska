@@ -27,7 +27,7 @@ public/js/lib/bootstrap.min*
 public/js/lib/jquery.min*
 
 # API keys and secrets
-.env
+#.env
 
 # Dependency directory
 node_modules
